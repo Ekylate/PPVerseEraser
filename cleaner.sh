@@ -1,17 +1,24 @@
 #!/bin/sh
 personalDir=`cd ~;pwd`
-echo "Récupération des noms de livres en cours..."
-pathToLibrary=$personalDir"/Documents/ProPresenter/Libraries/Default"
+launchingTime=`date +%Y%m%d%H%M%S`
+cleanerResourcesFolder=$personalDir'/Documents/Tools4PP/Cleaner/'
+outputFolder=$cleanerResourcesFolder'/outputs'
+inputFolder=$cleanerResourcesFolder'/inputs'
+pathToLibrary=$personalDir'/Documents/ProPresenter/Libraries/Default'
 
-pathToFileFilter=$personalDir"/Documents/Tools4PP/Cleaner/inputs/books.txt"
+echo 'Récupération des noms de livres en cours...'
+echo 'Création filtres en fonction des noms de livres en cours...'
+pathToFileFilter=$inputFolder'/books.txt'
 echo '$pathToFileFilter = '$pathToFileFilter
 
-fileContent=`cat $pathToFileFilter`
-nbFileLines=`cat $pathToFileFilter | wc -l`
-echo '$fileContent ='
-echo $fileContent
-echo '$nbFileLines = '$nbFileLines
-echo '$nbContentLines = '`echo $fileContent | wc -l`
+#fileContent=`cat $pathToFileFilter`
+#nbFileLines=`cat $pathToFileFilter | wc -l`
+# echo '$fileContent ='
+# echo $fileContent
+# echo '$nbFileLines = '$nbFileLines
+# echo '$nbContentLines = '`echo $fileContent | wc -l`
 
+cat $pathToFileFilter | cut -c 1-4 > $outputFolder'/'$launchingTime'-shortcuts.txt'
 
 #echo $fileContent | tr 
+ 
