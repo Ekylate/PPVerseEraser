@@ -7,6 +7,7 @@ inputFolder=$cleanerResourcesFolder'/inputs'
 pathToLibrary=$personalDir'/Documents/ProPresenter/Libraries/Default'
 shortcutsFile=$outputFolder'/'$launchingTime'-shortcuts.txt'
 listToDeleteFiles=$outputFolder'/'$launchingTime'-filesToDelete.txt'
+filesInLibrary=''
 
 echo 'Récupération des noms de livres en cours...'
 echo 'Création filtres en fonction des noms de livres en cours...'
@@ -22,6 +23,18 @@ echo '$pathToFileFilter = '$pathToFileFilter
 
 cat $pathToFileFilter | cut -c 1-4 > $shortcutsFile
 
-#Double arrow to append or create if inexistant
-##TODO : populate woth correct values
-cat ' ' >> $listToDeleteFiles
+echo 'Recherche des livres correspondant aux filtres dans le dossier à analyser...'
+filesInLibrary=`ls $pathToLibrary`
+
+for tmpLibraryFile in $filesInLibrary;do
+	for tmpFiltr in $shortcutsFile;do
+		if [ `cat $tmpLibraryFile | grep $tmpFiltr` = $tmpLibraryFile ];then
+			#Double arrow to append to file or create it if file does not exist
+			cat $pathToLibrary'/'$tmpLibraryFile >> $listToDeleteFiles
+		fi
+	done
+done
+
+echo 'Fichier d''éléments à supprimer constitué.'
+echo 'Veuillez vérifier son contenu et relancer le script pour suppression'
+
